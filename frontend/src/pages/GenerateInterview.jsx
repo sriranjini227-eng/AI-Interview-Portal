@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import API from "../services/api";
 
 function GenerateInterview() {
   const navigate = useNavigate();
@@ -20,22 +21,22 @@ function GenerateInterview() {
     try {
       setLoading(true);
 
-      const res = await axios.post(
-        "http://localhost:5000/api/ai/generate",
+      const res = await API.post(
+        "/ai/generate",
         {
           role,
           difficulty,
         }
       );
 
-      await axios.post(
-        "http://localhost:5000/api/interviews",
-        {
-          title: `${role} Interview`,
-          role,
-          difficulty,
-          questions: res.data.questions.split("\n"),
-        },
+      await API.post(
+  "/interviews",
+  {
+    title: `${role} Interview`,
+    role,
+    difficulty,
+    questions: res.data.questions.split("\n"),
+  },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
