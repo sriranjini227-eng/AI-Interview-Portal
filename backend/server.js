@@ -12,6 +12,10 @@ console.log("Gemini Key:", process.env.GEMINI_API_KEY);
 connectDB();
 
 const app = express();
+app.use(cors({
+  origin: "https://ai-interview-portal-rho.vercel.app",
+  credentials: true,
+}));
 app.use(cors());
 app.use(express.json());
 
